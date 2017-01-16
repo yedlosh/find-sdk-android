@@ -16,7 +16,7 @@ public class Utils {
     }
 
     // Checking if WiFi adapter is ON or OFF
-    public static boolean isWiFiAvailable(Context context) {
+    public static boolean isWifiAvailable(Context context) {
         WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         if (wifi.isWifiEnabled()) {
             return true;

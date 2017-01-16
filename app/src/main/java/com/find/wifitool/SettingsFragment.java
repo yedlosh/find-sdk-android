@@ -1,10 +1,8 @@
 package com.find.wifitool;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,17 +20,6 @@ import com.find.wifitool.internal.Constants;
 
 public class SettingsFragment extends Fragment {
 
-    private static final String TAG = SettingsFragment.class.getSimpleName();
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String mParam2;
-    private OnFragmentInteractionListener mListener;
-
-    //private variables
     private TextView labelUserName;
     private TextView labelGroupName;
     private TextView labelServerName;
@@ -51,25 +38,6 @@ public class SettingsFragment extends Fragment {
     private int prefLearnInterval;
     private int prefLearnPeriod;
 
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SettingsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SettingsFragment newInstance(String param1, String param2) {
-        SettingsFragment fragment = new SettingsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     // Required empty public constructor
     public SettingsFragment() {
     }
@@ -77,10 +45,6 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
         sharedPreferences = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
         prefUsername = sharedPreferences.getString(Constants.USER_NAME, Constants.DEFAULT_USERNAME);
@@ -322,12 +286,6 @@ public class SettingsFragment extends Fragment {
         return rootView;
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     // Draw setting page UI
     private void drawUi() {
         // User name
@@ -360,23 +318,6 @@ public class SettingsFragment extends Fragment {
 
         // Learn period
         learnPeriod.setText(String.valueOf(prefLearnPeriod));
-
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            mListener = (OnFragmentInteractionListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 }
