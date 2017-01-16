@@ -10,18 +10,12 @@ import android.net.wifi.WifiManager;
 
 public class Utils {
 
-    // empty construtor
     private Utils() {
-
     }
 
-    // Checking if WiFi adapter is ON or OFF
     public static boolean isWifiAvailable(Context context) {
-        WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
-        if (wifi.isWifiEnabled()) {
-            return true;
-        }
-        else return false;
+        WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        return wifi.isWifiEnabled();
     }
 
     // Checking Location service status
@@ -32,15 +26,15 @@ public class Utils {
 
         try {
             gps_enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        } catch(Exception ex) {}
+        } catch (Exception ex) {
+        }
 
         try {
             network_enabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        } catch(Exception ex) {}
+        } catch (Exception ex) {
+        }
 
-        if(!gps_enabled && !network_enabled)
-            return false;
-        else return true;
+        return (gps_enabled || network_enabled);
     }
 
     // Checking if we have location permission or not
@@ -49,4 +43,5 @@ public class Utils {
         int coarseLocationPermission = context.checkCallingOrSelfPermission("android.permission.ACCESS_COARSE_LOCATION");
         return fineLocationPermission == 0 || coarseLocationPermission == 0;
     }
+
 }
