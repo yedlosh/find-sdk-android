@@ -43,7 +43,7 @@ public class LearnFragment extends Fragment {
     private static final String TAG = LearnFragment.class.getSimpleName();
 
     private Context mContext = getActivity();
-    Handler handler = new Handler();
+    private Handler handler = new Handler();
 
     private SharedPreferences sharedPreferences;
     private String strUsername;

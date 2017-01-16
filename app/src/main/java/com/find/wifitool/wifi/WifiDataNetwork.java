@@ -21,7 +21,7 @@ public class WifiDataNetwork implements Comparable<WifiDataNetwork>, Parcelable 
     private long timestamp;
 
     // Constructor
-    public WifiDataNetwork(ScanResult result) {
+    private WifiDataNetwork(ScanResult result) {
         bssid = result.BSSID;
         ssid = result.SSID;
         capabilities = result.capabilities;
@@ -30,7 +30,7 @@ public class WifiDataNetwork implements Comparable<WifiDataNetwork>, Parcelable 
         timestamp = System.currentTimeMillis();
     }
 
-    public WifiDataNetwork(Parcel in) {
+    private WifiDataNetwork(Parcel in) {
         bssid = in.readString();
         ssid = in.readString();
         capabilities = in.readString();

@@ -15,10 +15,10 @@ public class WifiData implements Parcelable {
     private List<WifiDataNetwork> mNetworks;
 
     public WifiData() {
-        mNetworks = new ArrayList<WifiDataNetwork>();
+        mNetworks = new ArrayList<>();
     }
 
-    public WifiData(Parcel in) {
+    private WifiData(Parcel in) {
         in.readTypedList(mNetworks, WifiDataNetwork.CREATOR);
     }
 

@@ -32,18 +32,17 @@ public class TrackFragment extends Fragment {
 
     private static final String TAG = TrackFragment.class.getSimpleName();
 
-    private OnFragmentInteractionListener mListener;
     private Context mContext;
     private SharedPreferences sharedPreferences;
     private String strUsername;
     private String strServer;
     private String strGroup;
-    private String strLocation = null;  // We don't need any location value fr Tracking
+    private String strLocation = null;  // We don't need any location value for Tracking
     private int trackVal;
 
     private TextView currLocView;
 
-    Handler handler = new Handler();
+    private Handler handler = new Handler();
 
     // Required empty public constructor
     public TrackFragment() {
@@ -140,12 +139,6 @@ public class TrackFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
-        try {
-            mListener = (OnFragmentInteractionListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
@@ -153,7 +146,6 @@ public class TrackFragment extends Fragment {
         super.onDetach();
         handler.removeCallbacks(runnableCode);
         LocalBroadcastManager.getInstance(mContext).unregisterReceiver(mMessageReceiver);
-        mListener = null;
     }
 
     // Logging message in form of Toasts

@@ -19,7 +19,7 @@ import org.json.JSONObject;
 public class FindWiFiImpl implements FindWiFi {
 
     private static final String TAG = FindWiFiImpl.class.getSimpleName();
-    public static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
+    private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 
     // private variables
     private static final int GET = 0;

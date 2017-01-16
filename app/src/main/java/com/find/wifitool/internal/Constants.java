@@ -22,7 +22,7 @@ public class Constants {
     public static final String LEARN_PERIOD = PACKAGE_NAME + "learnPeriod";
     public static final String IS_FIRST_RUN = PACKAGE_NAME + "isFirstRun";
 
-    //Default values
+    // Default values
     public static final String DEFAULT_USERNAME = "user";
     public static final  String DEFAULT_GROUP =  "group";
     public static final String DEFAULT_SERVER = "https://ml.internalpositioning.com/";
@@ -31,7 +31,7 @@ public class Constants {
     public static final int DEFAULT_LEARNING_INTERVAL = 5;
     public static final int DEFAULT_LEARNING_PERIOD = 3;
 
-    // BRaodcast message tag
+    // Broadcast message tag
     public static final String TRACK_BCAST = "com.find.wifitool.track";
 
     public static final String TRACK_TAG = "track";

@@ -13,7 +13,7 @@ import java.io.IOException;
  * Created by akshay on 30/12/16.
  */
 
-public class HttpCallback implements Callback {
+class HttpCallback implements Callback {
 
     private static final String TAG = HttpCallback.class.getSimpleName();
 
