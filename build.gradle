@@ -6,6 +6,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -15,6 +17,13 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+    }
+
+    project.ext {
+        retrofitVersion="2.1.0"
+        okHttpVersion = '3.4.1'
+        supportLibVersion="25.1.0"
+        autoVersion="1.2"
     }
 }
 

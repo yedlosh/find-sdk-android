@@ -9,6 +9,12 @@ All this using less battery and with higher accuracy indoors than the GPS.
 
 ----------
 
+**Fork notes**
+
+This is a fork from the official FIND client app for Android. The goals of this fork are
+ * Extract out a reusable SDK (Android library module) that can easily be integrated with apps to add indoor-positioning support backed by a FIND server.
+ * Refactor the client app to make use of this SDK and act as a sample
+
 **About FIND**
 
 The **Framework for Internal Navigation and Discovery (FIND)** allows you to use your (Android) smartphone or WiFi-enabled computer (laptop or Raspberry Pi or etc.) to determine your position within your home or office. You can easily use this system in place of motion sensors as its resolution will allow your phone to distinguish whether you are in the living room, the kitchen or the bedroom, etc. The position information can then be used in a variety of ways including home automation, way-finding, or tracking!

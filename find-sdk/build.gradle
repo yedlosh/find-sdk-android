@@ -1,0 +1,68 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.github.dcendents.android-maven'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+}
+
+dependencies {
+    provided "com.google.auto.value:auto-value:${project.ext.autoVersion}"
+    apt "com.google.auto.value:auto-value:${project.ext.autoVersion}"
+
+    compile(
+        "io.reactivex.rxjava2:rxjava:2.0.4",
+
+        "com.squareup.retrofit2:retrofit:${project.ext.retrofitVersion}",
+        "com.squareup.retrofit2:converter-gson:${project.ext.retrofitVersion}",
+        'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0',
+
+        "com.squareup.okhttp3:okhttp:${project.ext.okHttpVersion}",
+
+        "com.android.support:support-annotations:${project.ext.supportLibVersion}"
+    )
+
+    testCompile 'junit:junit:4.12'
+}
+
+// build a jar with source files
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError  false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+
+// build a jar with javadoc
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
