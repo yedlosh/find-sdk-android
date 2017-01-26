@@ -1,7 +1,7 @@
 # FIND Indoor Positioning System SDK for Android
 
-[![Release](https://jitpack.io/v/User/Repo.svg)]
-(https://jitpack.io/#User/Repo)
+[![Release](https://jitpack.io/#kiwiandroiddev/find-client-android.svg)]
+(https://jitpack.io/#kiwiandroiddev/find-client-android/)
 
 **Fork notes**
 
