@@ -1,10 +1,13 @@
 package com.find.wifitool;
 
+import android.Manifest;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,6 +90,10 @@ public class TrackFragment extends Fragment {
 
     private void pollTracker() {
         WifiToolApplication app = (WifiToolApplication) getActivity().getApplication();
+
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
 
         app.getFindClient()
                 .track()
