@@ -3,15 +3,65 @@
 [![Release](https://jitpack.io/v/kiwiandroiddev/find-client-android.svg)]
 (https://jitpack.io/#kiwiandroiddev/find-client-android/)
 
-**Fork notes**
+**Usage**
+
+First create a FindClient with your server config:
+```
+FindClient findClient = new FindClient.Builder(this)
+            .baseUrl("http://192.168.1.2:8003")
+            .group("your_group")
+            .username("your_username")
+            .build();
+```
+
+Ensure you have the [required permissions](#permissions), then get the device location with:
+```
+findClient.track()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Consumer<String>() {
+           @Override
+           public void accept(String location) {
+               Timber.d("Location: " + location);
+           }
+        });
+```
+That's all you'll need to add indoor-location support to your app.
+
+If you also want to be able to train your FIND server with new locations from your app, use the `learn()` method:
+```
+.learn("living-room")
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(Disposable d) {}
+
+            @Override
+            public void onComplete() {
+                Timber.d("WiFi fingerprint submitted!");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Timber.e("onError: " + e.toString(), e);
+            }
+        });
+```
+
+**Required Permissions<a name="permissions" />**
+
+For the FindClient to work, the user must have enabled Location Services and granted the `ACCESS_FINE_LOCATION` permission to your app.
+
+`ACCESS_FINE_LOCATION` must be granted by the user at runtime on Android 6.0 and above.
+
+Refer to the included sample app for an example.
+
+**About**
 
 This is a fork from the official FIND client app for Android. The goals of this fork are
  * Extract out a reusable SDK (Android library module) that can easily be integrated with apps to add indoor-positioning support backed by a FIND server.
  * Refactor the client app to make use of this SDK and act as a sample
-
-**SDK Guide**
-
-TODO
 
 **About FIND**
 
