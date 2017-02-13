@@ -5,10 +5,10 @@ package com.orchestral.findsdksample.settings;
  */
 public interface ClientSettings {
 
-    Integer getLearnScanPeriodInSeconds();
+    Integer getLearnScanIntervalInSeconds();
 
     Integer getTotalLearnTimeInMinutes();
 
-    Integer getTrackScanPeriodInSeconds();
+    Integer getTrackScanIntervalInSeconds();
 
 }

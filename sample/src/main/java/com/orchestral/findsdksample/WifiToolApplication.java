@@ -76,7 +76,7 @@ public class WifiToolApplication extends Application implements UserSettings {
     }
 
     @Override
-    public Integer getLearnScanPeriodInSeconds() {
+    public Integer getLearnScanIntervalInSeconds() {
         return getSharedPreferencesForUserSettings().getInt(Constants.LEARN_INTERVAL, Constants.DEFAULT_LEARNING_INTERVAL);
     }
 
@@ -86,7 +86,7 @@ public class WifiToolApplication extends Application implements UserSettings {
     }
 
     @Override
-    public Integer getTrackScanPeriodInSeconds() {
+    public Integer getTrackScanIntervalInSeconds() {
         return getSharedPreferencesForUserSettings().getInt(Constants.TRACK_INTERVAL, Constants.DEFAULT_TRACKING_INTERVAL);
     }
 

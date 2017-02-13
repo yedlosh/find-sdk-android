@@ -12,9 +12,19 @@
     <string name="action_Find">Visit FIND website</string>
     <string name="action_kontext">Visit Kontext website</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="click_to_set">[click to set]</string>
+
     <string name="settings">Settings</string>
     <string name="location_permission_rationale">Location access needed to get your indoor position</string>
+
+    <!-- Settings -->
+    <string name="server_settings">Server Settings</string>
+    <string name="client_settings">Client Settings</string>
+    <string name="pref_title_server_url">Server URL</string>
+    <string name="pref_title_group_name">Group name</string>
+    <string name="pref_title_user_name">User name</string>
+    <string name="pref_title_track_interval">Track scan interval </string>
+    <string name="pref_title_learn_total_time">Learn time</string>
+    <string name="pref_title_learn_scan_interval">Learn scan interval</string>
+
 </resources>

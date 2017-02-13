@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/server_settings" >
+
+        <EditTextPreference
+            android:key="pref_server_url"
+            android:title="@string/pref_title_server_url" />
+
+        <EditTextPreference
+            android:key="pref_group_name"
+            android:title="@string/pref_title_group_name" />
+
+        <EditTextPreference
+            android:key="pref_user_name"
+            android:title="@string/pref_title_user_name" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/client_settings" >
+
+        <EditTextPreference
+            android:key="pref_track_scan_interval"
+            android:title="@string/pref_title_track_interval" />
+
+        <EditTextPreference
+            android:key="pref_learn_total_time"
+            android:title="@string/pref_title_learn_total_time" />
+
+        <EditTextPreference
+            android:key="pref_learn_scan_interval"
+            android:title="@string/pref_title_learn_scan_interval" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
