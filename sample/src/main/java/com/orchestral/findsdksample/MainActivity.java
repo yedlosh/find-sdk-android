@@ -3,15 +3,11 @@ package com.orchestral.findsdksample;
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,15 +15,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.ViewGroup;
 
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener;
 import com.orchestral.findsdksample.internal.Constants;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 1234;
     private SharedPreferences sharedPreferences;
+    private ViewGroup rootView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +37,7 @@ public class MainActivity extends AppCompatActivity
 
         initMenuDrawer(toolbar);
 
+        rootView = (ViewGroup) findViewById(R.id.content);
         requestRuntimePermissionsIfNeeded();
 
         // Calling function to set some default values if its our first run
@@ -60,42 +59,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void requestRuntimePermissionsIfNeeded() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED) {
-
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.ACCESS_FINE_LOCATION)) {
-                } else {
-                    ActivityCompat.requestPermissions(this,
-                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                            REQUEST_CODE_ASK_PERMISSIONS);
-                }
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE_ASK_PERMISSIONS: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    Toast.makeText(MainActivity.this, "Permission granted, Loading Mission Control!",
-                            Toast.LENGTH_SHORT)
-                            .show();
-                } else {
-                    // Permission Denied
-                    Toast.makeText(MainActivity.this, "App need FINE LOCATION ACCESS to discover nearby Wifi APs",
-                            Toast.LENGTH_SHORT)
-                            .show();
-                }
-            }
-        }
+        Dexter.withActivity(this)
+                .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                .withListener(SnackbarOnDeniedPermissionListener.Builder
+                .with(rootView, R.string.location_permission_rationale)
+                .withOpenSettingsButton(R.string.settings)
+                .build())
+        .check();
     }
 
     // Setting default values in case fo 1st run

@@ -43,7 +43,9 @@ dependencies {
 
         "com.android.support:appcompat-v7:${project.ext.supportLibVersion}",
         "com.android.support:design:${project.ext.supportLibVersion}",
-        'com.jakewharton.timber:timber:4.5.0'
+        'com.jakewharton.timber:timber:4.5.0',
+
+        'com.karumi:dexter:3.0.2'
     )
 
     testCompile 'junit:junit:4.12'
