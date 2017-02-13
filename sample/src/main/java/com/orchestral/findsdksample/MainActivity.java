@@ -21,7 +21,7 @@ import com.karumi.dexter.Dexter;
 import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener;
 import com.orchestral.findsdksample.internal.Constants;
 import com.orchestral.findsdksample.learn.LearnFragment;
-import com.orchestral.findsdksample.settings.SettingsFragment;
+import com.orchestral.findsdksample.settings.view.SettingsFragment;
 import com.orchestral.findsdksample.track.TrackFragment;
 
 public class MainActivity extends AppCompatActivity {

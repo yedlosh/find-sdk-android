@@ -1,4 +1,4 @@
-package com.orchestral.findsdksample.settings;
+package com.orchestral.findsdksample.settings.view;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.orchestral.findsdksample.R;
 import com.orchestral.findsdksample.internal.Constants;
+import com.orchestral.findsdksample.settings.UserSettings;
 
 /**
  * Created by akshay on 30/12/16.
@@ -31,13 +32,8 @@ public class SettingsFragment extends Fragment {
     private TextView labelTrackInterval;
     private TextView labelLearnPeriod;
 
+    private UserSettings userSettings;
     private SharedPreferences sharedPreferences;
-    private String prefUsername;
-    private String prefServerName;
-    private String prefGroupName;
-    private int prefTrackInterval;
-    private int prefLearnInterval;
-    private int prefLearnPeriod;
 
     // Required empty public constructor
     public SettingsFragment() {
@@ -47,14 +43,8 @@ public class SettingsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        userSettings = (UserSettings) getActivity().getApplication();
         sharedPreferences = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
-        prefUsername = sharedPreferences.getString(Constants.USER_NAME, Constants.DEFAULT_USERNAME);
-        prefServerName = sharedPreferences.getString(Constants.SERVER_NAME, Constants.DEFAULT_SERVER);
-        prefGroupName = sharedPreferences.getString(Constants.GROUP_NAME, Constants.DEFAULT_GROUP);
-        prefTrackInterval = sharedPreferences.getInt(Constants.TRACK_INTERVAL, Constants.DEFAULT_TRACKING_INTERVAL);
-        prefLearnInterval = sharedPreferences.getInt(Constants.LEARN_INTERVAL, Constants.DEFAULT_LEARNING_INTERVAL);
-        prefLearnPeriod = sharedPreferences.getInt(Constants.LEARN_PERIOD, Constants.DEFAULT_LEARNING_PERIOD);
-
     }
 
     @Override
@@ -64,15 +54,15 @@ public class SettingsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
         // Getting all the UI components
-        labelUserName = (TextView)rootView.findViewById(R.id.fieldUserName);
-        labelGroupName = (TextView)rootView.findViewById(R.id.fieldGroupName);
-        labelServerName = (TextView)rootView.findViewById(R.id.fieldServerName);
-        labelLearnInterval = (TextView)rootView.findViewById(R.id.labelLearnInterval);
-        labelTrackInterval = (TextView)rootView.findViewById(R.id.labelTrackInterval);
-        labelLearnPeriod = (TextView)rootView.findViewById(R.id.labelLearnPeriod);
-        learnInterval = (TextView)rootView.findViewById(R.id.fieldLearnInterval);
-        learnPeriod = (TextView)rootView.findViewById(R.id.fieldLearnPeriod);
-        trackInterval = (TextView)rootView.findViewById(R.id.fieldTrackInterval);
+        labelUserName = (TextView) rootView.findViewById(R.id.fieldUserName);
+        labelGroupName = (TextView) rootView.findViewById(R.id.fieldGroupName);
+        labelServerName = (TextView) rootView.findViewById(R.id.fieldServerName);
+        labelLearnInterval = (TextView) rootView.findViewById(R.id.labelLearnInterval);
+        labelTrackInterval = (TextView) rootView.findViewById(R.id.labelTrackInterval);
+        labelLearnPeriod = (TextView) rootView.findViewById(R.id.labelLearnPeriod);
+        learnInterval = (TextView) rootView.findViewById(R.id.fieldLearnInterval);
+        learnPeriod = (TextView) rootView.findViewById(R.id.fieldLearnPeriod);
+        trackInterval = (TextView) rootView.findViewById(R.id.fieldTrackInterval);
 
         // Rendering the setting page
         drawUi();
@@ -177,11 +167,11 @@ public class SettingsFragment extends Fragment {
                 final NumberPicker numberPicker = new NumberPicker(getActivity());
                 builder.setView(numberPicker);
                 String[] nums = new String[11];
-                for(int i = 0; i < nums.length; i++)
+                for (int i = 0; i < nums.length; i++)
                     nums[i] = Integer.toString(i);
 
                 numberPicker.setMinValue(0);
-                numberPicker.setMaxValue(nums.length-1);
+                numberPicker.setMaxValue(nums.length - 1);
                 numberPicker.setWrapSelectorWheel(false);
                 numberPicker.setDisplayedValues(nums);
                 numberPicker.setValue(5);
@@ -216,11 +206,11 @@ public class SettingsFragment extends Fragment {
                 final NumberPicker numberPicker = new NumberPicker(getActivity());
                 builder.setView(numberPicker);
                 String[] nums = new String[11];
-                for(int i = 0; i < nums.length; i++)
+                for (int i = 0; i < nums.length; i++)
                     nums[i] = Integer.toString(i);
 
                 numberPicker.setMinValue(0);
-                numberPicker.setMaxValue(nums.length-1);
+                numberPicker.setMaxValue(nums.length - 1);
                 numberPicker.setWrapSelectorWheel(false);
                 numberPicker.setDisplayedValues(nums);
                 numberPicker.setValue(5);
@@ -255,11 +245,11 @@ public class SettingsFragment extends Fragment {
                 final NumberPicker numberPicker = new NumberPicker(getActivity());
                 builder.setView(numberPicker);
                 String[] nums = new String[16];
-                for(int i = 0; i < nums.length; i++)
+                for (int i = 0; i < nums.length; i++)
                     nums[i] = Integer.toString(i);
 
                 numberPicker.setMinValue(0);
-                numberPicker.setMaxValue(nums.length-1);
+                numberPicker.setMaxValue(nums.length - 1);
                 numberPicker.setWrapSelectorWheel(false);
                 numberPicker.setDisplayedValues(nums);
                 numberPicker.setValue(5);
@@ -287,38 +277,31 @@ public class SettingsFragment extends Fragment {
         return rootView;
     }
 
-    // Draw setting page UI
     private void drawUi() {
-        // User name
-        if(prefUsername != null && !prefUsername.isEmpty()) {
-            labelUserName.setText(prefUsername);
+        if (userSettings.getUsername() != null && !userSettings.getUsername().isEmpty()) {
+            labelUserName.setText(userSettings.getUsername());
 
         } else {
             labelUserName.setText(Constants.DEFAULT_USERNAME);
         }
 
-        // Group name
-        if(prefGroupName != null && !prefGroupName.isEmpty()) {
-            labelGroupName.setText(prefGroupName);
+        if (userSettings.getGroup() != null && !userSettings.getGroup().isEmpty()) {
+            labelGroupName.setText(userSettings.getGroup());
         } else {
             labelGroupName.setText(Constants.DEFAULT_GROUP);
         }
 
-        // Server name
-        if(prefServerName != null && !prefServerName.isEmpty()) {
-            labelServerName.setText(prefServerName);
+        if (userSettings.getServerUrl() != null && !userSettings.getServerUrl().isEmpty()) {
+            labelServerName.setText(userSettings.getServerUrl());
         } else {
             labelServerName.setText(Constants.DEFAULT_SERVER);
         }
 
-        // Track Interval
-        trackInterval.setText(String.valueOf(prefTrackInterval));
+        trackInterval.setText(String.valueOf(userSettings.getTrackScanPeriodInSeconds()));
 
-        // Learn Interval
-        learnInterval.setText(String.valueOf(prefLearnInterval));
+        learnInterval.setText(String.valueOf(userSettings.getLearnScanPeriodInSeconds()));
 
-        // Learn period
-        learnPeriod.setText(String.valueOf(prefLearnPeriod));
+        learnPeriod.setText(String.valueOf(userSettings.getTotalLearnTimeInMinutes()));
     }
 
 }

@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:clipToPadding="false"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".settings.SettingsFragment">
+    tools:context=".settings.view.SettingsFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
