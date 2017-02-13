@@ -1,4 +1,4 @@
-package com.find.wifitool;
+package com.orchestral.findsdksample;
 
 import org.junit.Test;
 

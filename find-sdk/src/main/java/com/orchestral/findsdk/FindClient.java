@@ -21,6 +21,7 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -54,6 +55,12 @@ public class FindClient {
         this.okHttpClient = okHttpClient;
     }
 
+    /**
+     * Attempts to determines the device's location using data on the currently visible WiFi
+     * access points ("fingerprint").
+     *
+     * Requires the ACCESS_FINE_LOCATION permission to be granted.
+     */
     public Single<String> track() {
         return getTrackService().track(buildTrackRequest())
                 .flatMap(new Function<TrackResponse, SingleSource<TrackResponse>>() {
@@ -119,16 +126,26 @@ public class FindClient {
                 .blockingGet();
     }
 
+    /**
+     * Trains the indoor location model by associating the current WiFi fingerprint (visible access
+     * points and signal strengths) with a descriptive location string.
+     *
+     * Note that a single learn call will not be sufficient to train the server for a location, optimally
+     * you want to send ~100 wifi fingerprints.
+     *
+     * @see <a href="https://www.internalpositioning.com/faq/">FIND FAQ</a>
+     *
+     * Requires the ACCESS_FINE_LOCATION permission to be granted.
+     */
     public Completable learn(String location) {
         return getLearnService()
                 .learn(buildLearnRequest(location))
-                .flatMap(new Function<LearnResponse, SingleSource<LearnResponse>>() {
+                .doOnSuccess(new Consumer<LearnResponse>() {
                     @Override
-                    public SingleSource<LearnResponse> apply(LearnResponse learnResponse) throws Exception {
+                    public void accept(LearnResponse learnResponse) throws Exception {
                         if (!learnResponse.success) {
-                            return Single.error(new RuntimeException("Learn request failed (success = false)"));
+                            throw new RuntimeException("Learn request failed (success = false)");
                         }
-                        return Single.just(learnResponse);
                     }
                 })
                 .toCompletable();

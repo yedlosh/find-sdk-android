@@ -1,4 +1,4 @@
-package com.find.wifitool.database;
+package com.orchestral.findsdksample.database;
 
 /**
  * Created by akshay on 30/12/16.

@@ -1,18 +1,21 @@
-package com.find.wifitool;
+package com.orchestral.findsdksample;
 
+import android.Manifest;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.find.wifitool.internal.Constants;
-import com.find.wifitool.internal.Utils;
+import com.orchestral.findsdksample.internal.Constants;
+import com.orchestral.findsdksample.internal.Utils;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -62,9 +65,27 @@ public class TrackFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_track, container, false);
         currLocView = (TextView) rootView.findViewById(R.id.labelLocationName);
-        handler.post(runnableCode);
 
         return rootView;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser) {
+            startTrackingLocation();
+        } else {
+            stopTrackingLocation();
+        }
+    }
+
+    private void startTrackingLocation() {
+        handler.post(runnableCode);
+    }
+
+    private void stopTrackingLocation() {
+        handler.removeCallbacks(runnableCode);
     }
 
     // Timers to keep track of our Tracking period
@@ -87,6 +108,11 @@ public class TrackFragment extends Fragment {
 
     private void pollTracker() {
         WifiToolApplication app = (WifiToolApplication) getActivity().getApplication();
+
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO inform user that permission is needed
+            return;
+        }
 
         app.getFindClient()
                 .track()
@@ -114,12 +140,6 @@ public class TrackFragment extends Fragment {
     private void setCurrentLocationText(String currLocation) {
         currLocView.setTextColor(getResources().getColor(R.color.currentLocationColor));
         currLocView.setText(currLocation);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        handler.removeCallbacks(runnableCode);
     }
 
 }

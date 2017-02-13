@@ -1,4 +1,4 @@
-package com.find.wifitool;
+package com.orchestral.findsdksample;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -18,12 +18,12 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.find.wifitool.database.Event;
-import com.find.wifitool.database.InternalDatabase;
-import com.find.wifitool.internal.Constants;
-import com.find.wifitool.internal.Utils;
-import com.find.wifitool.location.Location;
-import com.find.wifitool.location.LocationArrayAdapter;
+import com.orchestral.findsdksample.database.Event;
+import com.orchestral.findsdksample.database.InternalDatabase;
+import com.orchestral.findsdksample.internal.Constants;
+import com.orchestral.findsdksample.internal.Utils;
+import com.orchestral.findsdksample.location.Location;
+import com.orchestral.findsdksample.location.LocationArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
-import static com.find.wifitool.internal.Utils.showLocationServicePromptIfNeeded;
+import static com.orchestral.findsdksample.internal.Utils.showLocationServicePromptIfNeeded;
 
 /**
  * Created by akshay on 30/12/16.
@@ -134,7 +134,8 @@ public class LearnFragment extends Fragment {
                         Location location = new Location(strLocationName, strGroup, strUsername);
                         insertIntoList(location);
                         internalDatabase.addEvent(new Event(strLocationName, strGroup, strUsername));
-                        handler.post(runnableCode);
+
+                        startLearning();
                     }
                 });
                 builder.setNegativeButton(android.R.string.cancel, null);
@@ -143,25 +144,40 @@ public class LearnFragment extends Fragment {
         });
     }
 
+    private void startLearning() {
+        handler.post(runnableCode);
+    }
+
     // Insert new location into listView
     private void insertIntoList(Location wifi) {
         locationArrayAdapter.add(wifi);
 
         final ProgressDialog progress = new ProgressDialog(getActivity());
         progress.setTitle("Learning");
-        progress.setMessage("Please wait while we are collecting the Wifi APs around you...");
+        progress.setMessage("Please wait while we collect data on the Wifi APs around you...");
         progress.setCanceledOnTouchOutside(false);
+        progress.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                stopLearning();
+            }
+        });
         progress.show();
 
+        // stop learning automatically once we have enough data
         Runnable progressRunnable = new Runnable() {
             @Override
             public void run() {
                 progress.cancel();
-                handler.removeCallbacks(runnableCode);
+                stopLearning();
             }
         };
         Handler pdCanceller = new Handler();
         pdCanceller.postDelayed(progressRunnable, learnPeriodVal * 60 * 1000);
+    }
+
+    private void stopLearning() {
+        handler.removeCallbacks(runnableCode);
     }
 
     // Timers to keep track of our Learning period
@@ -214,7 +230,7 @@ public class LearnFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        handler.removeCallbacks(runnableCode);
+        stopLearning();
     }
 
 }

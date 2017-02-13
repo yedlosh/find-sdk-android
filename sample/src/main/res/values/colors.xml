@@ -7,4 +7,5 @@
 
     <color name="hintTextColor">#BDBDBD</color>
     <color name="currentLocationColor">#4CAF50</color>
+    <color name="white">#fff</color>
 </resources>

@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:keepScreenOn="true"
-    tools:context="com.findTools.Find.LearnFragment">
+    tools:context="LearnFragment">
 
     <ListView
         android:id="@+id/listView"

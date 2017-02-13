@@ -1,119 +1,136 @@
-# FIND- Indoor Positioning System (Android Client App)
+# FIND Indoor Positioning SDK for Android
 
-This client app helps you get started with FIND development. With this app you can easily:
+[![Release](https://jitpack.io/v/kiwiandroiddev/find-client-android.svg)]
+(https://jitpack.io/#kiwiandroiddev/find-sdk-android/)
 
- - "Learn": connect to the server and then submit fingerprints.
- - "Track": track what room you are in using just the WiFi networks around you
- - more coming soon...
-All this using less battery and with higher accuracy indoors than the GPS.
+This is an Android library to simplify integrating with a [FIND](https://github.com/schollz/find) server to add WiFi-based indoor positioning support to your app.
 
+To use this you will need to have [your own FIND server](https://www.internalpositioning.com/server/) configured. Alternatively, you can make use of the public demo FIND server at: https://ml.internalpositioning.com/ (with the security implications that using a public demo server entails :)
+
+Usage
+-----
+
+First create a FindClient with your server config:
+```java
+FindClient findClient = new FindClient.Builder(this)
+            .baseUrl("http://your-server:8003")
+            .group("your_group")
+            .username("your_username")
+            .build();
+```
+
+Ensure you have the [required permissions](#permissions), then get the device location with:
+```java
+findClient.track()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Consumer<String>() {
+           @Override
+           public void accept(String location) {
+               Timber.d("Location: " + location);
+           }
+        });
+```
+That's all you'll need to add indoor-location support to your app.
+
+If you also want to be able to train your FIND server with new locations from your app, use the `learn()` method:
+```java
+findClient.learn("living-room")
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(Disposable d) {}
+
+            @Override
+            public void onComplete() {
+                Timber.d("WiFi fingerprint submitted!");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Timber.e("onError: " + e.toString(), e);
+            }
+        });
+```
+
+Required Permissions<a name="permissions" />
+--------------------------------------------
+
+For the FindClient to work, the user must have enabled **Location Services** and granted the `ACCESS_FINE_LOCATION` permission to your app.
+
+`ACCESS_FINE_LOCATION` must be granted by the user at runtime on Android 6.0 and above. To do this, see the [official documentation](https://developer.android.com/training/permissions/requesting.html) on runtime permissions and/or check out the [Dexter](https://github.com/Karumi/Dexter) library.
+
+Refer to the included sample app in `sample/` for an example.
+
+Dependencies
+------------
+
+This library makes use of [RxJava 2](https://github.com/ReactiveX/RxJava), [Retrofit](https://square.github.io/retrofit/), [OkHttp](https://square.github.io/okhttp/) and [AutoValue](https://github.com/google/auto/).
+
+**Note on RxJava2 types**
+
+The API of `FindClient` makes use of some RxJava 2 reactive base types which might be new to those familiar with RxJava 1.X.
+
+`track()` returns a `Single<String>` which either emits a single location string, or fails.
+
+`learn(location)` returns a `Completable` which either completes successfully (with no value) or fails.
+
+For more on differences between RxJava2 and RxJava1, see the official [What's different in 2.0](https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0) wiki page and [Exploring RxJava 2 for Android](https://realm.io/news/gotocph-jake-wharton-exploring-rxjava2-android/)
+
+Download
+--------
+
+**Step 1.**
+
+Add the JitPack repository to your root `build.gradle` at the end of repositories:
+
+```groovy
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+**Step 2.**
+
+Add the dependency to your app's `build.gradle`
+
+```groovy
+dependencies {
+    compile 'com.github.kiwiandroiddev:find-client-android:v0.2-alpha'
+}
+```
+
+About
+-----
+
+This SDK and sample was forked from the official [Find client for Android](https://github.com/uncleashi/find-client-android).
+
+About FIND
 ----------
-
-**Fork notes**
-
-This is a fork from the official FIND client app for Android. The goals of this fork are
- * Extract out a reusable SDK (Android library module) that can easily be integrated with apps to add indoor-positioning support backed by a FIND server.
- * Refactor the client app to make use of this SDK and act as a sample
-
-**About FIND**
 
 The **Framework for Internal Navigation and Discovery (FIND)** allows you to use your (Android) smartphone or WiFi-enabled computer (laptop or Raspberry Pi or etc.) to determine your position within your home or office. You can easily use this system in place of motion sensors as its resolution will allow your phone to distinguish whether you are in the living room, the kitchen or the bedroom, etc. The position information can then be used in a variety of ways including home automation, way-finding, or tracking!
 To learn more about it or to run your own private server, check out https://github.com/schollz/find
 
-----------
-**Requirements**
- 1. Android Studio 
- 2. Android Mobile with WiFi adapter
+Authors
+-------
 
-**Dependencies**
- 1. OkHttp (Async HTTP library)
+ - Akshay Dekate (sample app)
+ - Shailesh Srivastava (sample app)
+ - Matthew Clarke (SDK)
 
-If you use Android Studio these dependencies are managed automatically for you. (When you first import the project you'll be asked to sync the relevant modules from the SDK manager.)
-
-**Getting Started**
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
-
-As usual, you get started by cloning the project to your local machine:
-```
-$ git clone git://github.com/uncleashi/find-app-android
-```
-**Building and Running**
-Import the FindWifiTool app into Android Studio as an existing project and select :
-```Run > Run app ```
-
-**Default Configuration**
- 1. User: user
- 2. Group: group
- 3. Server: https://ml.internalpositioning.com
- 4. Learn Period: : 3 min
- 5. Track Interval: 5 sec
- 6. Learn Interval: 5 sec
-
-**Wifi-Fingerprint:**
-```json
-{
-"group":"some group",
-	   "username":"some user",
-	   "location":"some place",
-	   "time":12309123,
-	   "wifi-fingerprint":
-	   [
-	      {
-	         "mac":"AA:AA:AA:AA:AA:AA",
-	         "rssi":-45
-	      },
-	      {
-	         "mac":"BB:BB:BB:BB:BB:BB",
-	         "rssi":-55
-	      }
-   ]
-}
-```
-Above JSON is sent via POST https://ml.internalpositioning.com/learn or POST https://ml.internalpositioning.com/track (or the server set by you ) depending on whether it is *Learning* or *Tracking*.
-
-----------
-**App Screenshots**
-
-*Create Activity*
-
-![alt tag](screenshots/create.png "Learn Activity")
-
-*Learn Activity*
-
-![alt tag](screenshots/learn.png "Learning Activity")
-
-*Track Activity*
-
-![alt tag](screenshots/track.png "Track Activity")
-
-*Setting Activity*
-
-![alt tag](screenshots/settings.png "Settings Activity")
-
-*Nav-Header*
-
-![alt tag](screenshots/nav-header.png "Nav Header")
-
-----------
-
-**Authors**
-
- - Akshay Dekate
- - Shailesh Srivastava
-
-----------
-
-**License**
+License
+-------
 
 The code supplied here is covered under the MIT Open Source License:
 
-Copyright (c) 2016 Akshay Dekate
+Original work Copyright (c) 2016 Akshay Dekate
+
+Modified work Copyright (c) 2017 Orion Health
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-----------
