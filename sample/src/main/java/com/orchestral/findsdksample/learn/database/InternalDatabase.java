@@ -1,4 +1,4 @@
-package com.orchestral.findsdksample.database;
+package com.orchestral.findsdksample.learn.database;
 
 import android.content.ContentValues;
 import android.content.Context;

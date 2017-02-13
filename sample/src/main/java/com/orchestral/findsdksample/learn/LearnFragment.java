@@ -1,4 +1,4 @@
-package com.orchestral.findsdksample;
+package com.orchestral.findsdksample.learn;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -18,12 +18,14 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.orchestral.findsdksample.database.Event;
-import com.orchestral.findsdksample.database.InternalDatabase;
+import com.orchestral.findsdksample.R;
+import com.orchestral.findsdksample.WifiToolApplication;
+import com.orchestral.findsdksample.learn.database.Event;
+import com.orchestral.findsdksample.learn.database.InternalDatabase;
 import com.orchestral.findsdksample.internal.Constants;
 import com.orchestral.findsdksample.internal.Utils;
-import com.orchestral.findsdksample.location.Location;
-import com.orchestral.findsdksample.location.LocationArrayAdapter;
+import com.orchestral.findsdksample.learn.location.Location;
+import com.orchestral.findsdksample.learn.location.LocationArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

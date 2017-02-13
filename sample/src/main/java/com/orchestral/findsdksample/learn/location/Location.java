@@ -1,4 +1,4 @@
-package com.orchestral.findsdksample.location;
+package com.orchestral.findsdksample.learn.location;
 
 import android.os.Parcel;
 import android.os.Parcelable;

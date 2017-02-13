@@ -1,4 +1,4 @@
-package com.orchestral.findsdksample;
+package com.orchestral.findsdksample.settings;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.orchestral.findsdksample.R;
 import com.orchestral.findsdksample.internal.Constants;
 
 /**

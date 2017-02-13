@@ -1,4 +1,4 @@
-package com.orchestral.findsdksample;
+package com.orchestral.findsdksample.track;
 
 import android.Manifest;
 import android.content.SharedPreferences;
@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.orchestral.findsdksample.R;
+import com.orchestral.findsdksample.WifiToolApplication;
 import com.orchestral.findsdksample.internal.Constants;
 import com.orchestral.findsdksample.internal.Utils;
 

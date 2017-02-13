@@ -1,4 +1,4 @@
-package com.orchestral.findsdksample.database;
+package com.orchestral.findsdksample.learn.database;
 
 /**
  * Created by akshay on 30/12/16.

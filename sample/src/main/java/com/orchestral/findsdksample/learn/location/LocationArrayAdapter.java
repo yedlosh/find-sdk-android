@@ -1,4 +1,4 @@
-package com.orchestral.findsdksample.location;
+package com.orchestral.findsdksample.learn.location;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;

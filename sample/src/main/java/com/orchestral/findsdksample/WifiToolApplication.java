@@ -28,6 +28,7 @@ public class WifiToolApplication extends Application {
     private void setupFindClient() {
         boolean httpLoggingEnabled = (BuildConfig.DEBUG == true);
 
+        // TODO get these values from user settings
         findClient = new FindClient.Builder(this)
                     .okHttpClient(buildOkHttpClient(httpLoggingEnabled))
                     .baseUrl(Constants.DEFAULT_SERVER)
