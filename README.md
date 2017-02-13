@@ -1,7 +1,7 @@
 # FIND Indoor Positioning SDK for Android
 
 [![Release](https://jitpack.io/v/kiwiandroiddev/find-client-android.svg)]
-(https://jitpack.io/#kiwiandroiddev/find-client-android/)
+(https://jitpack.io/#kiwiandroiddev/find-sdk-android/)
 
 This is an Android library to simplify integrating with a [FIND](https://github.com/schollz/find) server to add WiFi-based indoor positioning support to your app.
 
