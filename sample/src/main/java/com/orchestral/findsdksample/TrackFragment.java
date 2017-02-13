@@ -65,9 +65,27 @@ public class TrackFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_track, container, false);
         currLocView = (TextView) rootView.findViewById(R.id.labelLocationName);
-        handler.post(runnableCode);
 
         return rootView;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser) {
+            startTrackingLocation();
+        } else {
+            stopTrackingLocation();
+        }
+    }
+
+    private void startTrackingLocation() {
+        handler.post(runnableCode);
+    }
+
+    private void stopTrackingLocation() {
+        handler.removeCallbacks(runnableCode);
     }
 
     // Timers to keep track of our Tracking period
@@ -92,6 +110,7 @@ public class TrackFragment extends Fragment {
         WifiToolApplication app = (WifiToolApplication) getActivity().getApplication();
 
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO inform user that permission is needed
             return;
         }
 
@@ -121,12 +140,6 @@ public class TrackFragment extends Fragment {
     private void setCurrentLocationText(String currLocation) {
         currLocView.setTextColor(getResources().getColor(R.color.currentLocationColor));
         currLocView.setText(currLocation);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        handler.removeCallbacks(runnableCode);
     }
 
 }
