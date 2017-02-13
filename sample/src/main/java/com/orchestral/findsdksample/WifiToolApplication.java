@@ -1,8 +1,8 @@
-package com.find.wifitool;
+package com.orchestral.findsdksample;
 
 import android.app.Application;
 
-import com.find.wifitool.internal.Constants;
+import com.orchestral.findsdksample.internal.Constants;
 import com.orchestral.findsdk.FindClient;
 
 import okhttp3.OkHttpClient;

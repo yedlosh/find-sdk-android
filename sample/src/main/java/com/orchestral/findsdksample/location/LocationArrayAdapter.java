@@ -1,4 +1,4 @@
-package com.find.wifitool.location;
+package com.orchestral.findsdksample.location;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.find.wifitool.R;
+import com.orchestral.findsdksample.R;
 
 import java.util.List;
 

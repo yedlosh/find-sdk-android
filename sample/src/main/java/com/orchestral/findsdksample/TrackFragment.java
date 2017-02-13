@@ -1,4 +1,4 @@
-package com.find.wifitool;
+package com.orchestral.findsdksample;
 
 import android.Manifest;
 import android.content.SharedPreferences;
@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.find.wifitool.internal.Constants;
-import com.find.wifitool.internal.Utils;
+import com.orchestral.findsdksample.internal.Constants;
+import com.orchestral.findsdksample.internal.Utils;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;

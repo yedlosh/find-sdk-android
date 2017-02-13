@@ -1,4 +1,4 @@
-package com.find.wifitool.internal;
+package com.orchestral.findsdksample.internal;
 
 /**
  * Created by akshay on 30/12/16.

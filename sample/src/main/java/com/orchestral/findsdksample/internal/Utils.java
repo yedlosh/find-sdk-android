@@ -1,4 +1,4 @@
-package com.find.wifitool.internal;
+package com.orchestral.findsdksample.internal;
 
 import android.app.Activity;
 import android.content.Context;

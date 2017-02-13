@@ -1,4 +1,4 @@
-package com.find.wifitool;
+package com.orchestral.findsdksample;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import com.find.wifitool.internal.Constants;
+import com.orchestral.findsdksample.internal.Constants;
 
 /**
  * Created by akshay on 30/12/16.

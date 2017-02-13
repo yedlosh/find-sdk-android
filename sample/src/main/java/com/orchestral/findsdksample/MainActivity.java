@@ -1,4 +1,4 @@
-package com.find.wifitool;
+package com.orchestral.findsdksample;
 
 import android.Manifest;
 import android.content.Intent;
@@ -21,7 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.find.wifitool.internal.Constants;
+import com.orchestral.findsdksample.internal.Constants;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

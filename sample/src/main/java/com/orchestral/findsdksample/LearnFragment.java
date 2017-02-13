@@ -1,4 +1,4 @@
-package com.find.wifitool;
+package com.orchestral.findsdksample;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -18,12 +18,12 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.find.wifitool.database.Event;
-import com.find.wifitool.database.InternalDatabase;
-import com.find.wifitool.internal.Constants;
-import com.find.wifitool.internal.Utils;
-import com.find.wifitool.location.Location;
-import com.find.wifitool.location.LocationArrayAdapter;
+import com.orchestral.findsdksample.database.Event;
+import com.orchestral.findsdksample.database.InternalDatabase;
+import com.orchestral.findsdksample.internal.Constants;
+import com.orchestral.findsdksample.internal.Utils;
+import com.orchestral.findsdksample.location.Location;
+import com.orchestral.findsdksample.location.LocationArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
-import static com.find.wifitool.internal.Utils.showLocationServicePromptIfNeeded;
+import static com.orchestral.findsdksample.internal.Utils.showLocationServicePromptIfNeeded;
 
 /**
  * Created by akshay on 30/12/16.
