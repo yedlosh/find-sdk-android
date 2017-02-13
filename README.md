@@ -30,7 +30,7 @@ That's all you'll need to add indoor-location support to your app.
 
 If you also want to be able to train your FIND server with new locations from your app, use the `learn()` method:
 ```
-.learn("living-room")
+findClient.learn("living-room")
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new CompletableObserver() {
@@ -51,17 +51,15 @@ If you also want to be able to train your FIND server with new locations from yo
 
 **Required Permissions<a name="permissions" />**
 
-For the FindClient to work, the user must have enabled Location Services and granted the `ACCESS_FINE_LOCATION` permission to your app.
+For the FindClient to work, the user must have enabled **Location Services** and granted the `ACCESS_FINE_LOCATION` permission to your app.
 
-`ACCESS_FINE_LOCATION` must be granted by the user at runtime on Android 6.0 and above.
+`ACCESS_FINE_LOCATION` must be granted by the user at runtime on Android 6.0 and above. To do this, see the [official documentation](https://developer.android.com/training/permissions/requesting.html) on runtime permissions and/or check out the [Dexter](https://github.com/Karumi/Dexter) library.
 
 Refer to the included sample app for an example.
 
 **About**
 
-This is a fork from the official FIND client app for Android. The goals of this fork are
- * Extract out a reusable SDK (Android library module) that can easily be integrated with apps to add indoor-positioning support backed by a FIND server.
- * Refactor the client app to make use of this SDK and act as a sample
+This SDK and sample was forked from the official [Find client for Android](https://github.com/uncleashi/find-client-android)
 
 **About FIND**
 
