@@ -6,7 +6,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.findTools.Find"
+        applicationId "com.orchestral.findsdksample"
         minSdkVersion 18
         targetSdkVersion 25
         versionCode 1
