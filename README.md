@@ -3,7 +3,9 @@
 [![Release](https://jitpack.io/v/kiwiandroiddev/find-client-android.svg)]
 (https://jitpack.io/#kiwiandroiddev/find-client-android/)
 
-This is an Android library to simplify integrating with a [FIND server](https://github.com/schollz/find) to add WiFi-based indoor positioning support to your app.
+This is an Android library to simplify integrating with a [FIND](https://github.com/schollz/find) server to add WiFi-based indoor positioning support to your app.
+
+To use this you will need to have [your own FIND server](https://www.internalpositioning.com/server/) configured. Alternatively, you can make use of the public demo FIND server at: https://ml.internalpositioning.com/ (with the security implications that using a public demo server entails :)
 
 Usage
 -----
