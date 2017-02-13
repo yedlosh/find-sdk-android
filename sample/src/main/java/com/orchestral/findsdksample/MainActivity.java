@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -21,51 +21,71 @@ import com.karumi.dexter.Dexter;
 import com.karumi.dexter.listener.single.SnackbarOnDeniedPermissionListener;
 import com.orchestral.findsdksample.internal.Constants;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
     private ViewGroup rootView;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        rootView = (ViewGroup) findViewById(R.id.root_view);
 
-        initMenuDrawer(toolbar);
+        initToolbar();
+        initViewPager();
 
-        rootView = (ViewGroup) findViewById(R.id.content);
         requestRuntimePermissionsIfNeeded();
 
         // Calling function to set some default values if its our first run
         sharedPreferences = getSharedPreferences(Constants.PREFS_NAME, 0);
         initDefaultPreferencesIfNeeded();
 
-        initDefaultFragment();
+        initNavigationMenu();
     }
 
-    private void initMenuDrawer(Toolbar toolbar) {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+    private void initToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+    private void initViewPager() {
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPager.setAdapter(new MainScreensPagerAdapter(getSupportFragmentManager()));
+    }
+
+    private void initNavigationMenu() {
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_learn:
+                                viewPager.setCurrentItem(0, true);
+                                break;
+                            case R.id.action_track:
+                                viewPager.setCurrentItem(1, true);
+                                break;
+                            case R.id.action_settings:
+                                viewPager.setCurrentItem(2, true);
+                                break;
+                        }
+                        return true;
+                    }
+                });
     }
 
     private void requestRuntimePermissionsIfNeeded() {
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 .withListener(SnackbarOnDeniedPermissionListener.Builder
-                .with(rootView, R.string.location_permission_rationale)
-                .withOpenSettingsButton(R.string.settings)
-                .build())
-        .check();
+                        .with(rootView, R.string.location_permission_rationale)
+                        .withOpenSettingsButton(R.string.settings)
+                        .build())
+                .check();
     }
 
     // Setting default values in case fo 1st run
@@ -83,22 +103,6 @@ public class MainActivity extends AppCompatActivity
             editor.putInt(Constants.LEARN_INTERVAL, Constants.DEFAULT_LEARNING_INTERVAL);
             editor.putBoolean(Constants.IS_FIRST_RUN, false);
             editor.apply();
-        }
-    }
-
-    private void initDefaultFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content, new LearnFragment())
-                .commit();
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
     }
 
@@ -135,31 +139,29 @@ public class MainActivity extends AppCompatActivity
         startActivity(browserIntent);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
+    private static class MainScreensPagerAdapter extends FragmentStatePagerAdapter {
 
-        Fragment fragment;
-        if (id == R.id.nav_settings) {
-            fragment = new SettingsFragment();
-        } else if (id == R.id.nav_track) {
-            fragment = new TrackFragment();
-        } else {
-            // Anything else is home
-            fragment = new LearnFragment();
+        public MainScreensPagerAdapter(FragmentManager fm) {
+            super(fm);
         }
 
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.content, fragment)
-                .commit();      // FIXME java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return new LearnFragment();
+                case 1:
+                    return new TrackFragment();
+                case 2:
+                    return new SettingsFragment();
+            }
+            throw new IllegalArgumentException("illegal view pager position");
+        }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+        @Override
+        public int getCount() {
+            return 3;
+        }
     }
 
 }
