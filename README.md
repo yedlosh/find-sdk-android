@@ -1,4 +1,4 @@
-# FIND Indoor Positioning System SDK for Android
+# FIND Indoor Positioning SDK for Android
 
 [![Release](https://jitpack.io/v/kiwiandroiddev/find-client-android.svg)]
 (https://jitpack.io/#kiwiandroiddev/find-client-android/)
@@ -63,6 +63,21 @@ For the FindClient to work, the user must have enabled **Location Services** and
 
 Refer to the included sample app in `sample/` for an example.
 
+Dependencies
+------------
+
+This library makes use of [RxJava 2](https://github.com/ReactiveX/RxJava), [Retrofit](https://square.github.io/retrofit/), [OkHttp](https://square.github.io/okhttp/) and [AutoValue](https://github.com/google/auto/).
+
+**Note on RxJava2 types**
+
+The API of `FindClient` makes use of some RxJava 2 reactive base types which might be new to those familiar with RxJava 1.X.
+
+`track()` returns a `Single<String>` which either emits a single location string, or fails.
+
+`learn(location)` returns a `Completable` which either completes successfully (with no value) or fails.
+
+For more on differences between RxJava2 and RxJava1, see the official [What's different in 2.0](https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0) wiki page and [Exploring RxJava 2 for Android](https://realm.io/news/gotocph-jake-wharton-exploring-rxjava2-android/)
+
 Download
 --------
 
@@ -110,7 +125,9 @@ License
 
 The code supplied here is covered under the MIT Open Source License:
 
-Copyright (c) 2016 Akshay Dekate
+Original work Copyright (c) 2016 Akshay Dekate
+
+Modified work Copyright (c) 2017 Orion Health
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
