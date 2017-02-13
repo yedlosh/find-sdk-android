@@ -98,7 +98,7 @@ Add the dependency to your app's `build.gradle`
 
 ```groovy
 dependencies {
-    compile 'com.github.kiwiandroiddev:find-client-android:v0.1-alpha'
+    compile 'com.github.kiwiandroiddev:find-client-android:v0.2-alpha'
 }
 ```
 
