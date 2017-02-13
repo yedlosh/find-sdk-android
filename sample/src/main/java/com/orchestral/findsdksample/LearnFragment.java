@@ -134,7 +134,8 @@ public class LearnFragment extends Fragment {
                         Location location = new Location(strLocationName, strGroup, strUsername);
                         insertIntoList(location);
                         internalDatabase.addEvent(new Event(strLocationName, strGroup, strUsername));
-                        handler.post(runnableCode);
+
+                        startLearning();
                     }
                 });
                 builder.setNegativeButton(android.R.string.cancel, null);
@@ -143,25 +144,40 @@ public class LearnFragment extends Fragment {
         });
     }
 
+    private void startLearning() {
+        handler.post(runnableCode);
+    }
+
     // Insert new location into listView
     private void insertIntoList(Location wifi) {
         locationArrayAdapter.add(wifi);
 
         final ProgressDialog progress = new ProgressDialog(getActivity());
         progress.setTitle("Learning");
-        progress.setMessage("Please wait while we are collecting the Wifi APs around you...");
+        progress.setMessage("Please wait while we collect data on the Wifi APs around you...");
         progress.setCanceledOnTouchOutside(false);
+        progress.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                stopLearning();
+            }
+        });
         progress.show();
 
+        // stop learning automatically once we have enough data
         Runnable progressRunnable = new Runnable() {
             @Override
             public void run() {
                 progress.cancel();
-                handler.removeCallbacks(runnableCode);
+                stopLearning();
             }
         };
         Handler pdCanceller = new Handler();
         pdCanceller.postDelayed(progressRunnable, learnPeriodVal * 60 * 1000);
+    }
+
+    private void stopLearning() {
+        handler.removeCallbacks(runnableCode);
     }
 
     // Timers to keep track of our Learning period
@@ -214,7 +230,7 @@ public class LearnFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        handler.removeCallbacks(runnableCode);
+        stopLearning();
     }
 
 }
