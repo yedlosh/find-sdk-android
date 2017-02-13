@@ -3,13 +3,15 @@
 [![Release](https://jitpack.io/v/kiwiandroiddev/find-client-android.svg)]
 (https://jitpack.io/#kiwiandroiddev/find-client-android/)
 
+This is an Android library to simplify integrating with a [FIND server](https://github.com/schollz/find) to add WiFi-based indoor positioning support to your app.
+
 Usage
 -----
 
 First create a FindClient with your server config:
 ```java
 FindClient findClient = new FindClient.Builder(this)
-            .baseUrl("http://192.168.1.2:8003")
+            .baseUrl("http://your-server:8003")
             .group("your_group")
             .username("your_username")
             .build();
@@ -57,7 +59,7 @@ For the FindClient to work, the user must have enabled **Location Services** and
 
 `ACCESS_FINE_LOCATION` must be granted by the user at runtime on Android 6.0 and above. To do this, see the [official documentation](https://developer.android.com/training/permissions/requesting.html) on runtime permissions and/or check out the [Dexter](https://github.com/Karumi/Dexter) library.
 
-Refer to the included sample app for an example.
+Refer to the included sample app in `sample/` for an example.
 
 Download
 --------
@@ -86,7 +88,7 @@ dependencies {
 About
 -----
 
-This SDK and sample was forked from the official [Find client for Android](https://github.com/uncleashi/find-client-android)
+This SDK and sample was forked from the official [Find client for Android](https://github.com/uncleashi/find-client-android).
 
 About FIND
 ----------
