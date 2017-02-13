@@ -17,37 +17,13 @@ import timber.log.Timber;
 
 public class WifiToolApplication extends Application implements UserSettings {
 
-    private FindClient findClient;
+    private OkHttpClient okHttpClient;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
         setupLogger();
-        setupFindClient();
-    }
-
-    private void setupFindClient() {
-        boolean httpLoggingEnabled = (BuildConfig.DEBUG == true);
-
-        // TODO get these values from user settings
-        findClient = new FindClient.Builder(this)
-                    .okHttpClient(buildOkHttpClient(httpLoggingEnabled))
-                    .baseUrl(Constants.DEFAULT_SERVER)
-                    .group("LucidLynx")
-                    .username("user")
-                    .build();
-    }
-
-    private OkHttpClient buildOkHttpClient(boolean loggingEnabled) {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        if (loggingEnabled) {
-            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            builder.addInterceptor(interceptor);
-        }
-
-        return builder.build();
     }
 
     private void setupLogger() {
@@ -57,7 +33,31 @@ public class WifiToolApplication extends Application implements UserSettings {
     }
 
     public FindClient getFindClient() {
-        return findClient;
+        return new FindClient.Builder(this)
+                .okHttpClient(getOkHttpClient())
+                .baseUrl(getServerUrl())
+                .group(getGroup())
+                .username(getUsername())
+                .build();
+    }
+
+    private OkHttpClient getOkHttpClient() {
+        if (okHttpClient == null) {
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            if (shouldEnableHttpLogging()) {
+                HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+                interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                builder.addInterceptor(interceptor);
+            }
+
+            okHttpClient = builder.build();
+        }
+
+        return okHttpClient;
+    }
+
+    private boolean shouldEnableHttpLogging() {
+        return BuildConfig.DEBUG == true;
     }
 
     @Override
@@ -93,4 +93,5 @@ public class WifiToolApplication extends Application implements UserSettings {
     private SharedPreferences getSharedPreferencesForUserSettings() {
         return getSharedPreferences(Constants.PREFS_NAME, 0);
     }
+
 }
