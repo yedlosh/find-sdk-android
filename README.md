@@ -3,10 +3,11 @@
 [![Release](https://jitpack.io/v/kiwiandroiddev/find-client-android.svg)]
 (https://jitpack.io/#kiwiandroiddev/find-client-android/)
 
-**Usage**
+Usage
+-----
 
 First create a FindClient with your server config:
-```
+```java
 FindClient findClient = new FindClient.Builder(this)
             .baseUrl("http://192.168.1.2:8003")
             .group("your_group")
@@ -15,7 +16,7 @@ FindClient findClient = new FindClient.Builder(this)
 ```
 
 Ensure you have the [required permissions](#permissions), then get the device location with:
-```
+```java
 findClient.track()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -29,7 +30,7 @@ findClient.track()
 That's all you'll need to add indoor-location support to your app.
 
 If you also want to be able to train your FIND server with new locations from your app, use the `learn()` method:
-```
+```java
 findClient.learn("living-room")
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -49,7 +50,8 @@ findClient.learn("living-room")
         });
 ```
 
-**Required Permissions<a name="permissions" />**
+Required Permissions<a name="permissions" />
+--------------------------------------------
 
 For the FindClient to work, the user must have enabled **Location Services** and granted the `ACCESS_FINE_LOCATION` permission to your app.
 
@@ -57,24 +59,50 @@ For the FindClient to work, the user must have enabled **Location Services** and
 
 Refer to the included sample app for an example.
 
-**About**
+Download
+--------
+
+**Step 1.**
+
+Add the JitPack repository to your root `build.gradle` at the end of repositories:
+
+```groovy
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+**Step 2.**
+
+Add the dependency to your app's `build.gradle`
+
+```groovy
+dependencies {
+    compile 'com.github.kiwiandroiddev:find-client-android:v0.1-alpha'
+}
+```
+
+About
+-----
 
 This SDK and sample was forked from the official [Find client for Android](https://github.com/uncleashi/find-client-android)
 
-**About FIND**
+About FIND
+----------
 
 The **Framework for Internal Navigation and Discovery (FIND)** allows you to use your (Android) smartphone or WiFi-enabled computer (laptop or Raspberry Pi or etc.) to determine your position within your home or office. You can easily use this system in place of motion sensors as its resolution will allow your phone to distinguish whether you are in the living room, the kitchen or the bedroom, etc. The position information can then be used in a variety of ways including home automation, way-finding, or tracking!
 To learn more about it or to run your own private server, check out https://github.com/schollz/find
 
-**Authors**
+Authors
+-------
 
  - Akshay Dekate (sample app)
  - Shailesh Srivastava (sample app)
  - Matthew Clarke (SDK)
 
-----------
-
-**License**
+License
+-------
 
 The code supplied here is covered under the MIT Open Source License:
 
@@ -85,5 +113,3 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-----------
