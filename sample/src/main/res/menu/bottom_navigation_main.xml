@@ -4,19 +4,19 @@
     <item
         android:id="@+id/action_learn"
         android:enabled="true"
-        android:icon="@android:drawable/ic_menu_compass"
-        android:title="Train"
+        android:icon="@drawable/ic_learn_location_24dp"
+        android:title="@string/menu_learn"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_track"
         android:enabled="true"
-        android:icon="@android:drawable/ic_menu_view"
-        android:title="Track"
+        android:icon="@drawable/ic_track_location_24dp"
+        android:title="@string/menu_track"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_settings"
         android:enabled="true"
-        android:icon="@drawable/ic_menu_manage"
-        android:title="Settings"
+        android:icon="@drawable/ic_settings_24dp"
+        android:title="@string/menu_settings"
         app:showAsAction="ifRoom" />
 </menu>
