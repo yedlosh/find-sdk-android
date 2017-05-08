@@ -30,6 +30,7 @@ public class AndroidWifiFingerprintAgent implements WifiFingerprintAgent {
     public List<WifiAccessPoint> getWifiFingerprint() {
         List<WifiAccessPoint> accessPoints = new ArrayList<>();
         WifiManager wifiManager = (WifiManager) applicationContext.getSystemService(Context.WIFI_SERVICE);
+        wifiManager.startScan();
 
         // TODO this will return an empty list on Android 6.0 and up if runtime location permissions
         // haven't been granted by the user. Location services must also be enabled, apparently.
